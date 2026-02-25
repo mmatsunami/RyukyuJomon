@@ -7,7 +7,9 @@ Repository for Ryukyu Jomon paper
 * Coalescent simulation using fastsimcoal2
 * Local ancestral inference using RFmix
 
+## Reference
 
+Matsunami et al. (2026)
 
 
 
