@@ -6,4 +6,15 @@ Repository for Ryukyu Jomon paper
 * relate
 * fastsimcoal2
 * RFmix
-* 
+
+### relate
+
+
+### fastsimcoal2
+
+
+### RFmix
+
+
+
+
