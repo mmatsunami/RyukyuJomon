@@ -2,7 +2,7 @@
 
 * relate program and part of input files can be downloaded from [here](https://myersgroup.github.io/relate/index.html)
 
-## convert vcf into hap file
+### convert vcf into hap file
 
 ```sh
 PrepareInputFiles.sh \
@@ -14,7 +14,7 @@ PrepareInputFiles.sh \
 -o converted_ouput
 ```
 
-## prepare relate input file
+### prepare relate input file
 
 ```sh
 PrepareInputFiles.sh \
@@ -26,7 +26,7 @@ PrepareInputFiles.sh \
 -o relate_input
 ```
 
-## execute relate
+### execute relate
 
 ```sh
 RelateParallel.sh \
@@ -40,7 +40,7 @@ RelateParallel.sh \
 -o relate_result
 ```
 
-## estimate population size
+### estimate population size
 
 ```sh
 RelateCoalescentRate \
@@ -53,7 +53,7 @@ RelateCoalescentRate \
 --poplabels relate_result.poplabels
 ```
 
-## plot
+### plot
 
 ```R
 library(ggplot2)
