@@ -2,6 +2,10 @@
 
 ## Used Programs
 
+* vcftools
+* 
+
+
 ## 
 
 test test
