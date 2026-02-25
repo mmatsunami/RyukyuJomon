@@ -3,8 +3,8 @@
 ## Used Programs
 
 * vcftools
+* annovar
 * 
-
 
 ## 
 
