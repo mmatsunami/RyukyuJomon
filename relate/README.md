@@ -1,4 +1,6 @@
-## relate
+# relate
+
+* relate program and part of input files can be downloaded from [here](https://myersgroup.github.io/relate/index.html)
 
 * convert vcf into hap file
 
