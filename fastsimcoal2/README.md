@@ -6,6 +6,7 @@
 * bcftools
 * [annovar](https://annovar.openbioinformatics.org/en/latest/)
 * [vcflib](https://github.com/vcflib/vcflib/tree/master)
+* [easySFS](https://github.com/isaacovercast/easySFS)
 
 
 ## Used data
