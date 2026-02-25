@@ -47,4 +47,28 @@ gzip -c > biallele.mask.noncoding.vcf.gz
 
 * filter CpG
 
+```sh
+vcftools --gzvcf biallele.mask.noncoding.chr${CHR}.vcf.gz --exclude-bed cpgIslandExt.tsv --recode --stdout | \
+gzip -c > biallele.mask.noncoding.noCpG.vcf.gz
+```
+
+* ancestral alleles were fixed
+
+```sh
+bcftools plugin fixref biallele.mask.noncoding.noCpG.vcf.gz -O z -o biallele.mask.noncoding.noCpG.ancref.chr${CHR}.vcf.gz -- -f homo_sapiens_ancestor.fa -m top
+```
+
+* random sampling of SNPs
+
+```sh
+bcftools view biallele.mask.noncoding.noCpG.ancref.vcf.gz | \
+vcfrandomsample -r 0.07 | \
+gzip -c > biallele.mask.noncoding.noCpG.ancref.r007.vcf.gz
+```
+
+* make fold SFS by easySFS
+
+```sh
+python easySFS.py -i biallele.mask.noncoding.noCpG.ancref.r007.vcf.gz -p samples_pop.txt --unfolded -a -o outdir --proj=18,18
+```
 
