@@ -2,8 +2,8 @@
 
 ## Used Programs
 
-* vcftools
-* bcftools
+* [vcftools](https://vcftools.github.io/index.html)
+* [bcftools](https://samtools.github.io/bcftools/)
 * [annovar](https://annovar.openbioinformatics.org/en/latest/)
 * [vcflib](https://github.com/vcflib/vcflib/tree/master)
 * [easySFS](https://github.com/isaacovercast/easySFS)
