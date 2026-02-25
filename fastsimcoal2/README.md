@@ -3,8 +3,9 @@
 ## Used Programs
 
 * vcftools
+* bcftools
 * [annovar](https://annovar.openbioinformatics.org/en/latest/)
-* 
+
 
 ## Used data
 
