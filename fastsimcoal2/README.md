@@ -9,7 +9,7 @@
 * [easySFS](https://github.com/isaacovercast/easySFS)
 
 
-## Used data
+## Used public data
 
 * [annovar hg38 refGene](https://annovar.openbioinformatics.org/en/latest/user-guide/download/)
 * [USCS annotation for CpG island](https://genome.ucsc.edu/cgi-bin/hgTables?hgta_doSchemaDb=hg38&hgta_doSchemaTable=cpgIslandExt)
