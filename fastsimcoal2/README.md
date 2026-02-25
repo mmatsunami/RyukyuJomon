@@ -5,6 +5,7 @@
 * vcftools
 * bcftools
 * [annovar](https://annovar.openbioinformatics.org/en/latest/)
+* [vcflib](https://github.com/vcflib/vcflib/tree/master)
 
 
 ## Used data
