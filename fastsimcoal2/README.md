@@ -20,7 +20,8 @@
 * remove mono-allele
 
 ```sh
-vcftools --gzvcf input.vcf.gz --mac 1 --recode --stdout | gzip -c > out.vcf.gz
+vcftools --gzvcf input.vcf.gz --mac 1 --recode --stdout | \
+gzip -c > out.vcf.gz
 ```
 
 * filter mask regions
@@ -34,11 +35,16 @@ gzip -c > output.vcf.gz
 
 ```sh
 #annovar
-perl table_annovar.pl biallele.mask.vcf.gz /path/humandb/ -buildver hg38 -out biallele.mask -remove -protocol refGene -operation g -vcfinput --thread 32 --maxgenethread 32
+perl table_annovar.pl biallele.mask.vcf.gz \
+/path/humandb/ -buildver hg38 \
+-out biallele.mask \
+-remove -protocol refGene \
+-operation g -vcfinput --thread 32 --maxgenethread 32
 
 #get position
 zcat biallele.mask.hg38_multianno.vcf.gz | \
-awk '$8~/exonic/ {print $1,$2}{OFS="\t"}' >  biallele.mask.hg38.exonic_snps.txt
+awk '$8~/exonic/ {print $1,$2}{OFS="\t"}' >  \
+biallele.mask.hg38.exonic_snps.txt
 
 #filter coding
 vcftools --gzvcf biallele.mask.vcf.gz --exclude-positions biallele.mask.hg38.exonic_snps.txt --recode --stdout | \
@@ -48,14 +54,17 @@ gzip -c > biallele.mask.noncoding.vcf.gz
 * filter CpG
 
 ```sh
-vcftools --gzvcf biallele.mask.noncoding.chr${CHR}.vcf.gz --exclude-bed cpgIslandExt.tsv --recode --stdout | \
+vcftools --gzvcf biallele.mask.noncoding.chr${CHR}.vcf.gz \
+--exclude-bed cpgIslandExt.tsv --recode --stdout | \
 gzip -c > biallele.mask.noncoding.noCpG.vcf.gz
 ```
 
 * ancestral alleles were fixed
 
 ```sh
-bcftools plugin fixref biallele.mask.noncoding.noCpG.vcf.gz -O z -o biallele.mask.noncoding.noCpG.ancref.chr${CHR}.vcf.gz -- -f homo_sapiens_ancestor.fa -m top
+bcftools plugin fixref biallele.mask.noncoding.noCpG.vcf.gz \
+-O z -o biallele.mask.noncoding.noCpG.ancref.chr${CHR}.vcf.gz \
+-- -f homo_sapiens_ancestor.fa -m top
 ```
 
 * random sampling of SNPs
@@ -69,6 +78,9 @@ gzip -c > biallele.mask.noncoding.noCpG.ancref.r007.vcf.gz
 * make fold SFS by easySFS
 
 ```sh
-python easySFS.py -i biallele.mask.noncoding.noCpG.ancref.r007.vcf.gz -p samples_pop.txt --unfolded -a -o outdir --proj=18,18
+python easySFS.py \
+-i biallele.mask.noncoding.noCpG.ancref.r007.vcf.gz \
+-p samples_pop.txt \
+--unfolded -a -o outdir --proj=18,18
 ```
 
