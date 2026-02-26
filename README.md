@@ -9,7 +9,7 @@ Repository for Ryukyu Jomon paper
 
 ## Reference
 
-Matsunami et al. (2026)
+Matsunami et al. (2026) Ancient Ryukyu Jomon contributed to past and current genetic structure of Japanese populations
 
 
 
