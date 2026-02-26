@@ -7,6 +7,7 @@
 * [annovar](https://annovar.openbioinformatics.org/en/latest/)
 * [vcflib](https://github.com/vcflib/vcflib/tree/master)
 * [easySFS](https://github.com/isaacovercast/easySFS)
+* [fastsimcoal2](https://cmpg.unibe.ch/software/fastsimcoal2/)
 
 
 ## Used public data
