@@ -151,7 +151,7 @@ done
 
 #find point estimation
 cd ./main_run
-cp ../241101JMN2.tpl ./
+cp ../twoJomon.tpl ./
 ./fsc-selectbestrun.sh 
 #100 bestlhoods files found, run74 with 1 Lhood diff fits best.
 ```
@@ -170,7 +170,7 @@ for BS in {1..50}; do
 		cd run${i}
 		cp ../twoJomon.tpl ./twoJomon.bs${BS}.tpl
 		cp ../twoJomon.est ./twoJomon.bs${BS}.est
-		cp ./bs${BS}/sfs/fastsimcoal2/resampling_jointDAFpop0_1.obs ./twoJomon.bs${BS}_jointDAFpop1_0.obs
+		cp ./bs${BS}/sfs/fastsimcoal2/resampling_jointDAFpop1_0.obs ./twoJomon.bs${BS}_jointDAFpop1_0.obs
 		fsc \
 			-t twoJomon.bs${BS}.tpl \
 			-e twoJomon.bs${BS}.est \
@@ -179,7 +179,7 @@ for BS in {1..50}; do
  	done
 
 	# Find the best run:
-	cp ./main_run/fsc-selectbestrun_mod.sh ./
+	cp ./main_run/fsc-selectbestrun.sh ./
 	cp ./bs${BS}/run1/twoJomon.bs${BS}.tpl ./
 	./fsc-selectbestrun.sh
 
