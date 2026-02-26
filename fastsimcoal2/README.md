@@ -74,6 +74,7 @@ bcftools plugin fixref biallele.mask.noncoding.noCpG.vcf.gz \
 bcftools view biallele.mask.noncoding.noCpG.ancref.vcf.gz | \
 vcfrandomsample -r 0.07 | \
 gzip -c > biallele.mask.noncoding.noCpG.ancref.r007.vcf.gz
+#1,719,898 SNPs were sampled
 ```
 
 * make fold SFS by easySFS
@@ -85,3 +86,43 @@ python easySFS.py \
 --unfolded -a -o outdir --proj=18,18
 ```
 
+## preparation of SFS for block-bootstraps
+
+```sh
+# Get all lines with genomic data
+zgrep -v "^#" biallele.mask.noncoding.noCpG.ancref.r007.vcf.gz | \
+gzip -c > biallele.mask.noncoding.noCpG.ancref.r007.allSites.gz
+
+# Get the header
+zgrep "^#" biallele.mask.noncoding.noCpG.ancref.r007.vcf.gz > \
+biallele.mask.noncoding.noCpG.ancref.r007.header
+
+# get 100 files with 17198 sites each (number 101 removed due to only 98 sites)
+gunzip biallele.mask.noncoding.noCpG.ancref.r007.allSites.gz
+split -l 17198 biallele.mask.noncoding.noCpG.ancref.r007.allSites \ biallele.mask.noncoding.noCpG.ancref.r007.sites.
+rm biallele.mask.noncoding.noCpG.ancref.r007.sites.dw
+gzip biallele.mask.noncoding.noCpG.ancref.r007.allSites
+
+#prep sfs file
+for NUM in {1..50}; do
+	mkdir bs${NUM}
+	cat biallele.mask.noncoding.noCpG.ancref.r007.header > \
+	bs${NUM}/resampling.bs.${NUM}.vcf
+
+	#Randomly add 100 blocks
+	for r in {1..100}; do
+		cat `shuf -n1 -e biallele.mask.noncoding.noCpG.ancref.r007.sites.*` >> \
+		bs${NUM}/resampling.bs.${NUM}.vcf
+	done
+
+	#Compress the vcf file again
+	gzip bs${NUM}/resampling.bs.${NUM}.vcf
+
+	phython easySFS.py \
+	-i bs${NUM}/resampling.bs.${NUM}.vcf.gz \
+	-p samples_pop.txt \
+	--unfolded -a \
+	-o bs${NUM}/sfs \
+	--proj=18,18
+done
+```
