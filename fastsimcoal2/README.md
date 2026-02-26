@@ -8,7 +8,7 @@
 * [vcflib](https://github.com/vcflib/vcflib/tree/master)
 * [easySFS](https://github.com/isaacovercast/easySFS)
 * [fastsimcoal2](https://cmpg.unibe.ch/software/fastsimcoal2/)
-
+* [speciation genomics scripts](https://github.com/speciationgenomics/scripts)
 
 ## Used public data
 
