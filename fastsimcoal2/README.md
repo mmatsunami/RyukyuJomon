@@ -89,21 +89,22 @@ python easySFS.py \
 ## preparation of SFS for block-bootstraps
 
 ```sh
-# Get all lines with genomic data
+# get all lines with genomic data
 zgrep -v "^#" biallele.mask.noncoding.noCpG.ancref.r007.vcf.gz | \
 gzip -c > biallele.mask.noncoding.noCpG.ancref.r007.allSites.gz
 
-# Get the header
+# get the header
 zgrep "^#" biallele.mask.noncoding.noCpG.ancref.r007.vcf.gz > \
 biallele.mask.noncoding.noCpG.ancref.r007.header
 
 # get 100 files with 17198 sites each (number 101 removed due to only 98 sites)
 gunzip biallele.mask.noncoding.noCpG.ancref.r007.allSites.gz
-split -l 17198 biallele.mask.noncoding.noCpG.ancref.r007.allSites \ biallele.mask.noncoding.noCpG.ancref.r007.sites.
+split -l 17198 biallele.mask.noncoding.noCpG.ancref.r007.allSites \
+biallele.mask.noncoding.noCpG.ancref.r007.sites.
 rm biallele.mask.noncoding.noCpG.ancref.r007.sites.dw
 gzip biallele.mask.noncoding.noCpG.ancref.r007.allSites
 
-#prep sfs file
+#prep sfs file for bootstrap
 for NUM in {1..50}; do
 	mkdir bs${NUM}
 	cat biallele.mask.noncoding.noCpG.ancref.r007.header > \
