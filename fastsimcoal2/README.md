@@ -92,15 +92,15 @@ python easySFS.py \
 ## preparation of SFS for block-bootstraps
 
 ```sh
-# get all lines with genomic data
+#get all lines with genomic data
 zgrep -v "^#" biallele.mask.noncoding.noCpG.ancref.r007.vcf.gz | \
 gzip -c > biallele.mask.noncoding.noCpG.ancref.r007.allSites.gz
 
-# get the header
+#get the header
 zgrep "^#" biallele.mask.noncoding.noCpG.ancref.r007.vcf.gz > \
 biallele.mask.noncoding.noCpG.ancref.r007.header
 
-# get 100 files with 17198 sites each (number 101 removed due to only 98 sites)
+#get 100 files with 17198 sites each (number 101 removed due to only 98 sites)
 gunzip biallele.mask.noncoding.noCpG.ancref.r007.allSites.gz
 split -l 17198 biallele.mask.noncoding.noCpG.ancref.r007.allSites \
 biallele.mask.noncoding.noCpG.ancref.r007.sites.
@@ -119,7 +119,7 @@ for NUM in {1..50}; do
 		bs${NUM}/resampling.bs.${NUM}.vcf
 	done
 
-	#Compress the vcf file again
+	#compress the vcf file again
 	gzip bs${NUM}/resampling.bs.${NUM}.vcf
 
 	phython easySFS.py \
@@ -164,7 +164,7 @@ for BS in {1..50}; do
 	mkdir bs${BS} 
 	cd bs${BS}
 
-	# Run fastsimcoal 100 times:
+	#run fastsimcoal 100 times:
 	for i in {1..100}; do
 		mkdir run${i}
 		cd run${i}
@@ -190,4 +190,28 @@ cat bs1/bestrun/twoJomon.bs1.bestlhoods > twoJomon.bs_sum.bestlhoods
 for NUM in {2..50};do
 	cat bs${NUM}/bestrun/twoJomon.bs${NUM}.bestlhoods | sed '1,1d' >> twoJomon.bs_sum.bestlhoods
 done
+```
+
+## plot SFS
+
+* convert sfs into dadi format
+
+```sh
+#observed
+perl sfs_obs_norm.pl twoJomon_jointDAFpop1_0.obs > \
+twoJomon_jointDAFpop1_0.norm.obs
+perl sfs_obs.fastsimcoal2dadi.pl twoJomon_jointDAFpop1_0.norm.obs HND_JMN RYK_JMN > \
+twoJomon_obs.dadi.sfs
+
+#expected
+perl sfs_exp.fastsimcoal2dadi.pl twoJomon_jointDAFpop1_0.txt HND_JMN RYK_JMN > \
+twoJomon_exp.dadi.sfs
+```
+
+* dadi-cli
+
+```sh
+dadi-cli Plot --fs twoJomon_obs.dadi.sfs \
+--fs2 twoJomon_exp.dadi.sfs \
+--output twoJomon.fs.pdf --model None --vmin 1e-05
 ```
