@@ -9,6 +9,7 @@
 * [easySFS](https://github.com/isaacovercast/easySFS)
 * [fastsimcoal2](https://cmpg.unibe.ch/software/fastsimcoal2/)
 * [speciation genomics scripts](https://github.com/speciationgenomics/scripts)
+* [dadi-cli](https://dadi-cli.readthedocs.io/en/latest/)
 
 ## Used public data
 
@@ -48,7 +49,9 @@ awk '$8~/exonic/ {print $1,$2}{OFS="\t"}' >  \
 biallele.mask.hg38.exonic_snps.txt
 
 #filter coding
-vcftools --gzvcf biallele.mask.vcf.gz --exclude-positions biallele.mask.hg38.exonic_snps.txt --recode --stdout | \
+vcftools --gzvcf biallele.mask.vcf.gz \
+--exclude-positions biallele.mask.hg38.exonic_snps.txt \
+--recode --stdout | \
 gzip -c > biallele.mask.noncoding.vcf.gz
 ```
 
@@ -125,5 +128,66 @@ for NUM in {1..50}; do
 	--unfolded -a \
 	-o bs${NUM}/sfs \
 	--proj=18,18
+done
+```
+
+## fastsimcoal2
+
+* main run
+
+```sh
+#main_run
+for NUM in {1..100}; do
+	mkdir ./main_run/run${NUM}
+	cp twoJomon.est twoJomon.tpl ./main_run/run${NUM}"/"
+	cp twoJomon_jointDAFpop1_0.obs ./main_run/run${NUM}"/"
+	cd ./main_run/run${NUM}"/"
+	fsc \
+		-t twoJomon.tpl \
+		-e twoJomon.est \
+		-d -0 -n 100000 -L 50 -s0 -M -c 24 -q
+	cd ../..
+done
+
+#find point estimation
+cd ./main_run
+cp ../241101JMN2.tpl ./
+./fsc-selectbestrun.sh 
+#100 bestlhoods files found, run74 with 1 Lhood diff fits best.
+```
+
+* block bootstrapping
+
+```sh
+#block bootstrap
+for BS in {1..50}; do
+	mkdir bs${BS} 
+	cd bs${BS}
+
+	# Run fastsimcoal 100 times:
+	for i in {1..100}; do
+		mkdir run${i}
+		cd run${i}
+		cp ../twoJomon.tpl ./twoJomon.bs${BS}.tpl
+		cp ../twoJomon.est ./twoJomon.bs${BS}.est
+		cp ./bs${BS}/sfs/fastsimcoal2/resampling_jointDAFpop0_1.obs ./twoJomon.bs${BS}_jointDAFpop1_0.obs
+		fsc \
+			-t twoJomon.bs${BS}.tpl \
+			-e twoJomon.bs${BS}.est \
+			-d -0 -n 100000 -L 50 -s0 -M -c 12 -q
+		cd ..
+ 	done
+
+	# Find the best run:
+	cp ./main_run/fsc-selectbestrun_mod.sh ./
+	cp ./bs${BS}/run1/twoJomon.bs${BS}.tpl ./
+	./fsc-selectbestrun.sh
+
+done
+
+#sum results
+cat bs1/bestrun/twoJomon.bs1.bestlhoods > twoJomon.bs_sum.bestlhoods
+for NUM in {2..50};do
+	cat bs${NUM}/bestrun/twoJomon.bs${NUM}.bestlhoods | sed '1,1d' >> twoJomon.bs_sum.bestlhoods
 done
 ```
