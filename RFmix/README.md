@@ -3,9 +3,9 @@
 ### Used Programs
 
 * [RFmix](https://github.com/slowkoni/rfmix)
-* karyoploteR (R library) 
+* [karyoploteR (R library) ](https://github.com/bernatgel/karyoploteR)
 
-### prep centromere file
+### prep centromere file by R
 
 ```R
 library(karyoploteR)
@@ -48,7 +48,7 @@ done
 for POP in {JPT,OKI}; do
 	for CHR in {1..22}; do
 		cat ${POP}.deconvoluted.filter.chr${CHR}.msp.tsv | \
-		awk -F "\t" 'NR==2{print $1,$2,$3,$4,$5,$6,"sum","norm_sum"}NR>2{ sum=0; for (i=7; i<=NF; i++) { sum+=$i 			} print $1,$2,$3,$4,$5,$6,sum,sum/210; }{OFS="\t"}' > \
+		awk -F "\t" 'NR==2{print $1,$2,$3,$4,$5,$6,"sum","norm_sum"}NR>2{ sum=0; for (i=7; i<=NF; i++) { sum+=$i } print $1,$2,$3,$4,$5,$6,sum,sum/210; }{OFS="\t"}' > \
 		${POP}.deconvoluted.filter.chr${CHR}.msp.sum.tsv
 	done
 
@@ -62,7 +62,7 @@ for POP in {JPT,OKI}; do
 done
 ```
 
-### plot
+### plot by R
 
 ```R
 library(karyoploteR)
