@@ -1,0 +1,21 @@
+// Priors and rules file
+// *********************
+
+[PARAMETERS]
+//#isInt? #name   #dist.#min  #max 
+//all Ns are in number of haploid individuals
+1  NHJMN       unif     2000  20000   output
+1  NHBOT       unif     2000  20000   output
+1  NHANC       unif     2000  20000   output
+1  NRJMN       unif     2000  20000   output
+1  TBOTHJMN1   unif     10   1000   output
+1  TMIDHJMN    unif     10   1000   hide
+1  TJMNDIV    unif      10   1000   output
+
+[RULES]
+
+[COMPLEX PARAMETERS]
+0 RJMNRES = NRBOT/NRJMN       hide
+0 HJMNRES1 = NHBOT/NHJMN     hide
+0 HJMNRES2 = NHANC/NHBOT    hide
+1 TBOTHJMN2  = TMIDHJMN+TBOTHJMN1  output
