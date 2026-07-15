@@ -4,8 +4,8 @@
 NHJMN  //HNDJ
 NRJMN   //RYKJ
 //Samples sizes and samples age 
-18 150
-18 80
+18 188
+18 54
 //Growth rates: negative growth implies population expansion
 0
 0
