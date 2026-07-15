@@ -137,7 +137,7 @@ done
 
 ```sh
 #main_run
-for NUM in {1..100}; do
+for NUM in {1..200}; do
 	mkdir ./main_run/run${NUM}
 	cp twoJomon.est twoJomon.tpl ./main_run/run${NUM}"/"
 	cp twoJomon_jointDAFpop1_0.obs ./main_run/run${NUM}"/"
@@ -153,7 +153,7 @@ done
 cd ./main_run
 cp ../twoJomon.tpl ./
 ./fsc-selectbestrun.sh 
-#100 bestlhoods files found, run74 with 1 Lhood diff fits best.
+#200 bestlhoods files found, run138 with 1 Lhood diff fits best.
 ```
 
 * block bootstrapping
