@@ -204,14 +204,14 @@ perl sfs_obs.fastsimcoal2dadi.pl twoJomon_jointDAFpop1_0.norm.obs HND_JMN RYK_JM
 twoJomon_obs.dadi.sfs
 
 #expected
-perl sfs_exp.fastsimcoal2dadi.pl twoJomon_jointDAFpop1_0.txt HND_JMN RYK_JMN > \
+perl sfs_exp.fastsimcoal2dadi.pl twoJomon_jointDAFpop1_0.txt HND_JMN RYK_JMN twoJomon_jointDAFpop1_0.obs > \
 twoJomon_exp.dadi.sfs
 ```
 
 * dadi-cli
 
 ```sh
-dadi-cli Plot --fs twoJomon_obs.dadi.sfs \
---fs2 twoJomon_exp.dadi.sfs \
---output twoJomon.fs.pdf --model None --vmin 1e-05
+dadi-cli Plot --fs twoJomon_exp.dadi.sfs \
+--fs2 twoJomon_obs.dadi.sfs \
+--output twoJomon.fs.pdf --model None --vmin 1
 ```
